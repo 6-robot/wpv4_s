@@ -1,0 +1,9 @@
+<launch>
+
+  <!-- WPV4 Base IMU PT-->
+  <include file="$(find wpv4_bringup)/launch/base_imu_pt.launch"/>
+
+  <!-- move_pt_demo -->
+  <node name="move_pt_demo" pkg="wpv4_tutorials" type="move_pt_demo" output="screen"/>
+
+</launch>
