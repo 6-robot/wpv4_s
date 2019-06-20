@@ -242,7 +242,7 @@
 </joint>
 
 <!-- velodyne -->
-<link name = "velo_link">
+<link name = "velodyne">
   <visual>
    <geometry>
     <cylinder length="0.00" radius="0.00"/>
@@ -251,10 +251,12 @@
   </visual>
 </link>
 <joint name="velodyne_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.2 0 1.7"  /> <!--pos-->
+    <origin rpy="0 0 0" xyz="0.3 0 0.3"  /> <!--pos-->
     <parent link="base_link" />
-    <child link="velo_link" />
+    <child link="velodyne" />
 </joint>
+
+
 
 <!-- Kinect -->
 <link name = "kinect2_ir_optical_frame">

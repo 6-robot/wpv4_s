@@ -1,0 +1,26 @@
+<launch>
+
+  <arg name="model" default="$(find wpv4_bringup)/urdf/wpv4.urdf"/>
+  <arg name="gui" default="false" />
+  <arg name="rvizconfig" default="$(find wpv4_velodyne)/rviz/velodyne.rviz" />
+
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+  <!--- velodyne 16 -->
+  <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch" />
+
+  <!-- WPV4 Base IMU PT-->
+  <include file="$(find wpv4_bringup)/launch/base_imu_pt.launch"/>
+
+  <!-- move_pt_demo -->
+  <node name="move_pt_demo" pkg="wpv4_tutorials" type="move_pt_demo"/>
+
+  <!-- velodyne_demo -->
+  <node name="wpv4_velodyne_demo" pkg="wpv4_velodyne" type="wpv4_velodyne_demo" output="screen"/>
+
+</launch>
