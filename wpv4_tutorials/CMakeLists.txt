@@ -221,7 +221,6 @@ target_link_libraries(wpv4_nav_simple_goal
   ${catkin_LIBRARIES}
 )
 
-
 add_executable(wpv4_imu_rpy
   src/wpv4_imu_rpy.cpp
 )
@@ -230,11 +229,18 @@ target_link_libraries(wpv4_imu_rpy
   ${catkin_LIBRARIES}
 )
 
-
 add_executable(move_pt_demo
   src/move_pt_demo.cpp
 )
 add_dependencies(move_pt_demo ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(move_pt_demo
+  ${catkin_LIBRARIES}
+)
+
+add_executable(wpv4_image_node
+  src/wpv4_image_node.cpp
+)
+add_dependencies(wpv4_image_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_image_node
   ${catkin_LIBRARIES}
 )
