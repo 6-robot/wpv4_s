@@ -244,3 +244,11 @@ add_dependencies(wpv4_image_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EX
 target_link_libraries(wpv4_image_node
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_pt_states
+  src/wpv4_pt_states.cpp
+)
+add_dependencies(wpv4_pt_states ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_pt_states
+  ${catkin_LIBRARIES}
+)
