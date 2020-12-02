@@ -237,7 +237,6 @@ target_link_libraries(imu_odometry_wpv4
   ${catkin_LIBRARIES}
 )
 
-## Declare a C++ executable
 add_executable(wpv4_motor_encoder
   src/wpv4_motor_encoder.cpp
   src/driver/SerialCom.cpp
@@ -247,7 +246,6 @@ add_dependencies(wpv4_motor_encoder ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin
 target_link_libraries(wpv4_motor_encoder
   ${catkin_LIBRARIES}
 )
-
 
 add_executable(wpv4_pt
   src/wpv4_pt.cpp

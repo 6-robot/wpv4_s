@@ -1,0 +1,20 @@
+<launch>
+
+  <arg name="model" default="$(find wpv4_bringup)/urdf/wpv4.urdf"/>
+  <arg name="gui" default="false" />
+  <arg name="rvizconfig" default="$(find wpv4_bringup)/rviz/imu_tf.rviz" />
+
+  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />
+
+  <!-- openzen_sensor-->
+  <node pkg="openzen_sensor" type="openzen_sensor_node" name="openzen_sensor_node" output="screen"/>
+
+  <!-- imu tf-->
+  <node pkg="wpv4_bringup" type="imu_odometry_wpv4" name="imu_odometry_wpv4" output="screen"/>
+
+</launch>
