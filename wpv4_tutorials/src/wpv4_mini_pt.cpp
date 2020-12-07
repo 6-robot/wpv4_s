@@ -54,8 +54,8 @@ int main(int argc, char** argv)
     ctrl_msg.position[0] = 0;
     ctrl_msg.position[1] = 0;
     //关节运动速度
-    ctrl_msg.velocity[0] = 1000;
-    ctrl_msg.velocity[1] = 1000;
+    ctrl_msg.velocity[0] = 6000;
+    ctrl_msg.velocity[1] = 6000;
 
 
     int nCount = 0;
