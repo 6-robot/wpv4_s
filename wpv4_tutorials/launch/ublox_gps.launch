@@ -1,8 +1,15 @@
 <launch>
-  <!--- wpv4 js imu -->
-  <include file="$(find ublox_gps)/launch/ublox_device.launch" />
 
-  <!-- gps_data -->
+  <!--- ublox_gps-->
+  <node pkg="ublox_gps" type="ublox_gps" name="ublox_gps"
+        output="screen"
+        clear_params="true"
+        respawn="true"
+        respawn_delay="30">
+    <rosparam command="load" file="$(find wpv4_bringup)/config/m8n.yaml" />
+  </node>
+
+  <!-- wpv4_gps_data -->
   <node pkg="wpv4_tutorials" type="wpv4_gps_data" name="wpv4_gps_data" output="screen"/>
 
 </launch>

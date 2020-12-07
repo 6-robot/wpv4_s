@@ -52,7 +52,7 @@ int main(int argc, char **argv)
   ROS_INFO("[wpv4_gps_data]");
 
   ros::NodeHandle n;
-  ros::Subscriber sub = n.subscribe("/ublox/fix", 100, gpsCallback);
+  ros::Subscriber sub = n.subscribe("/ublox_gps/fix", 100, gpsCallback);
   ros::spin();
 
   return 0;
