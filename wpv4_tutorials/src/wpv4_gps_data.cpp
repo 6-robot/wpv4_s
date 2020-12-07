@@ -43,7 +43,7 @@ void gpsCallback(const sensor_msgs::NavSatFix::ConstPtr& msg)
     float latitude = msg->latitude;
     float longitude = msg->longitude;
     float altitude = msg->altitude;
-    printf("[GPS]  纬度=  %f    经度= %f    海拔= %f \n",latitude,longitude,altitude);
+    printf("[GPS]  纬度= %f    经度= %f    \n",latitude,longitude);
 }
 
 int main(int argc, char **argv)
