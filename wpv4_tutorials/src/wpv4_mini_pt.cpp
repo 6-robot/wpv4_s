@@ -57,6 +57,7 @@ int main(int argc, char** argv)
     ctrl_msg.velocity[0] = 6000;
     ctrl_msg.velocity[1] = 6000;
 
+    sleep(1);
 
     int nCount = 0;
     ros::Rate r(0.2);  //频率0.2Hz,5秒一个周期
@@ -71,31 +72,35 @@ int main(int argc, char** argv)
             ctrl_msg.position[1] = 0;
             break;
         case 1:
-            ctrl_msg.position[0] = 30;
+            ctrl_msg.position[0] = 10;
             ctrl_msg.position[1] = 0;
             break;
         case 2:
-            ctrl_msg.position[0] = -30;
+            ctrl_msg.position[0] = 0;
             ctrl_msg.position[1] = 0;
             break;
         case 3:
-            ctrl_msg.position[0] = 0;
+            ctrl_msg.position[0] = -10;
             ctrl_msg.position[1] = 0;
             break;
         case 4:
             ctrl_msg.position[0] = 0;
-            ctrl_msg.position[1] = 10;
+            ctrl_msg.position[1] = 0;
             break;
         case 5:
             ctrl_msg.position[0] = 0;
             ctrl_msg.position[1] = -10;
+            break;
+        case 6:
+            ctrl_msg.position[0] = 0;
+            ctrl_msg.position[1] = 10;
             break;
         }
         mini_pt_pub.publish(ctrl_msg);
         ros::spinOnce();
         r.sleep();
         nCount ++;
-        if(nCount >5)
+        if(nCount >3)
         {
             nCount = 0;
         }

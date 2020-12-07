@@ -336,22 +336,43 @@ void CWPV4_driver::SetIOValue(unsigned char inValue)
 	m_GenerateSigCmd(2, 0x38, 1, 0x06, 0x62, &inValue);
 }
 
+
+void CWPV4_driver::m_Split4Bytes(unsigned char *inTarg, int inSrc)
+{
+	if (inTarg == NULL)
+	{
+		return;
+	}
+
+	static unsigned int temp;
+	memcpy(&temp, &inSrc, sizeof(int));
+	inTarg[3] = (unsigned char)temp & 0x00ff;
+	temp >>= 8;
+	inTarg[2] = (unsigned char)temp & 0x00ff;
+	temp >>= 8;
+	inTarg[1] = (unsigned char)temp & 0x00ff;
+	temp >>= 8;
+	inTarg[0] = (unsigned char)temp & 0x00ff;
+}
+
+
+
 void CWPV4_driver::SetMiniPT(double* inPos, int* inSpeed)
 {
 	static unsigned char ptBuf[16];
 	static int tmpData = 0;
 
 	tmpData = inSpeed[0];
-	m_Split2Bytes(&ptBuf[0], tmpData);
+	m_Split4Bytes(&ptBuf[0], tmpData);
 
 	tmpData = inPos[0]*100;
-	m_Split2Bytes(&ptBuf[4], tmpData);
+	m_Split4Bytes(&ptBuf[4], tmpData);
 
 	tmpData = inSpeed[1];
-	m_Split2Bytes(&ptBuf[8], tmpData);
+	m_Split4Bytes(&ptBuf[8], tmpData);
 
 	tmpData = inPos[1]*100;
-	m_Split2Bytes(&ptBuf[12], tmpData);
+	m_Split4Bytes(&ptBuf[12], tmpData);
 
 	m_GenerateSigCmd(3, 0x38, 16, 0x0B, 0x70, ptBuf);
 }

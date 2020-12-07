@@ -11,7 +11,7 @@
   </node>
 
   <!-- openzen_sensor-->
-  <node pkg="openzen_sensor" type="openzen_sensor_node" name="openzen_sensor_node" output="screen"/>
+  <node pkg="openzen_sensor" type="openzen_sensor_node" name="openzen_sensor_node" />
 
   <!-- wpv4 core-->
   <node pkg="wpv4_bringup" type="wpv4_core" name="wpv4_core" output="screen">
