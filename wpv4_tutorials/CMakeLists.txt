@@ -260,3 +260,11 @@ add_dependencies(wpv4_gps_data ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPO
 target_link_libraries(wpv4_gps_data
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_lidar_data
+  src/wpv4_lidar_data.cpp
+)
+add_dependencies(wpv4_lidar_data ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_lidar_data
+  ${catkin_LIBRARIES}
+)
