@@ -252,3 +252,11 @@ add_dependencies(wpv4_pt_states ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 target_link_libraries(wpv4_pt_states
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_gps_data
+  src/wpv4_gps_data.cpp
+)
+add_dependencies(wpv4_gps_data ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_gps_data
+  ${catkin_LIBRARIES}
+)

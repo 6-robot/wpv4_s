@@ -1,0 +1,8 @@
+<launch>
+  <!--- wpv4 js imu -->
+  <include file="$(find ublox_gps)/launch/ublox_device.launch" />
+
+  <!-- gps_data -->
+  <node pkg="wpv4_tutorials" type="wpv4_gps_data" name="wpv4_gps_data" output="screen"/>
+
+</launch>
