@@ -353,5 +353,5 @@ void CWPV4_driver::SetMiniPT(double* inPos, int* inSpeed)
 	tmpData = inPos[1]*100;
 	m_Split2Bytes(&ptBuf[12], tmpData);
 
-	m_GenerateSigCmd(3, 0x38, 10, 0x0B, 0x70, ptBuf);
+	m_GenerateSigCmd(3, 0x38, 16, 0x0B, 0x70, ptBuf);
 }
