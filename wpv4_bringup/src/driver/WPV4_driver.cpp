@@ -335,3 +335,23 @@ void CWPV4_driver::SetIOValue(unsigned char inValue)
 {
 	m_GenerateSigCmd(2, 0x38, 1, 0x06, 0x62, &inValue);
 }
+
+void CWPV4_driver::SetMiniPT(double* inPos, int* inSpeed)
+{
+	static unsigned char ptBuf[16];
+	static int tmpData = 0;
+
+	tmpData = inSpeed[0];
+	m_Split2Bytes(&ptBuf[0], tmpData);
+
+	tmpData = inPos[0]*100;
+	m_Split2Bytes(&ptBuf[4], tmpData);
+
+	tmpData = inSpeed[1];
+	m_Split2Bytes(&ptBuf[8], tmpData);
+
+	tmpData = inPos[1]*100;
+	m_Split2Bytes(&ptBuf[12], tmpData);
+
+	m_GenerateSigCmd(3, 0x38, 10, 0x0B, 0x70, ptBuf);
+}

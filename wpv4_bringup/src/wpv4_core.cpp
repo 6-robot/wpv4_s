@@ -83,6 +83,27 @@ void IOCallback(const std_msgs::ByteMultiArray& msg)
     }
     m_wpv4.SetIOValue(io_ctrl);
 }
+
+static double fDegToAng = 3.1415926/180;
+static double fAngToDeg = 180/3.1415926;
+static double pos_send[2];
+static int vel_send[2];
+//角度控制云台
+void MiniPTDegreeCallback(const sensor_msgs::JointState::ConstPtr& msg)
+{
+    int nNumJoint = msg->position.size();
+    if(nNumJoint > 2)
+    {
+        nNumJoint = 2;
+    }
+    for(int i=0;i<nNumJoint;i++)
+    {
+        pos_send[i] = msg->position[i];
+        vel_send[i] = msg->velocity[i];
+        //ROS_INFO("[MiniPTDegreeCallback] %d - %s = %.2f", i, msg->name[i].c_str(),msg->position[i]);
+    }
+    m_wpv4.SetMiniPT(pos_send,vel_send);
+}
  
 static float fKVx = 1.0f/sqrt(3.0f);
 static float fKVy = 2.0f/3.0f;
@@ -101,6 +122,7 @@ int main(int argc, char** argv)
     ros::Subscriber cmd_vel_sub = n.subscribe("/cmd_vel",1,&cmdVelCallback);
     ros::Subscriber sub_imu = n.subscribe("/imu/data_raw", 10, IMUCallback);
     ros::Subscriber io_ctrl_sub = n.subscribe("/wpv4/io_ctrl", 10, IOCallback);
+    ros::Subscriber mini_pt_degree_sub = n.subscribe("/wpv4/mini_pt_degree",30,&MiniPTDegreeCallback);
 
     ros::NodeHandle n_param("~");
     std::string strSerialPort;
@@ -138,6 +160,12 @@ int main(int argc, char** argv)
         nChassisType = CT_4WD;
     }
     
+    for(int i=0;i<2;i++)
+    {
+        pos_send[i] = 0;
+        vel_send[i] = 2000;
+    }
+
     ros::Time current_time, last_time;
     current_time = ros::Time::now();
     last_time = ros::Time::now();

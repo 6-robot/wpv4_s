@@ -1,0 +1,9 @@
+<launch>
+
+  <!-- WPV4 Base -->
+  <include file="$(find wpv4_bringup)/launch/base_only.launch"/>
+
+  <!-- wpv4_mini_pt -->
+  <node name="wpv4_mini_pt" pkg="wpv4_tutorials" type="wpv4_mini_pt" output="screen"/>
+
+</launch>

@@ -13,6 +13,7 @@ public:
 	void Mecanum(float inX, float inY, float inAngular);
 	void SetSixMotorsSpeed(int *inSpeed);
 	void SetIOValue(unsigned char inValue);
+	void SetMiniPT(double* inPos, int* inSpeed);
 	int arMotorPos[6];
 	int arMotorCurrent[6];
 	int nParseCount;
