@@ -127,12 +127,12 @@ namespace waterplus_local_planner
             costmap_2d::calculateMinAndMaxDistances(m_footprint_spec, m_robot_inscribed_radius, m_robot_circumscribed_radius); 
 
             ros::NodeHandle nh_planner("~/" + name);
-            nh_planner.param("max_vel_trans", m_max_vel_trans, 1.0);
-            nh_planner.param("max_vel_rot", m_max_vel_rot, 1.0);
-            nh_planner.param("max_acc_trans", m_max_acc_trans, 0.5);
-            nh_planner.param("max_acc_rot", m_max_acc_rot, 0.5);
-            nh_planner.param("acc_scale_trans", m_acc_scale_trans, 0.5);
-            nh_planner.param("acc_scale_rot", m_acc_scale_rot, 0.6);
+            nh_planner.param("max_vel_trans", m_max_vel_trans, 0.5);
+            nh_planner.param("max_vel_rot", m_max_vel_rot, 0.5);
+            nh_planner.param("max_acc_trans", m_max_acc_trans, 0.2);
+            nh_planner.param("max_acc_rot", m_max_acc_rot, 0.2);
+            nh_planner.param("acc_scale_trans", m_acc_scale_trans, 0.2);
+            nh_planner.param("acc_scale_rot", m_acc_scale_rot, 0.3);
             nh_planner.param("path_dist_tolerance", m_path_dist_tolerance, 0.5);
             nh_planner.param("goal_dist_tolerance", m_goal_dist_tolerance, 0.2);
             nh_planner.param("goal_yaw_tolerance", m_goal_yaw_tolerance, 0.2);
