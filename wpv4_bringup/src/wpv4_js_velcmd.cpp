@@ -33,8 +33,8 @@ TeleopJoy::TeleopJoy()
   ROS_INFO("TeleopJoy");
 }
 
-static float kx = 0.5;
-static float ky = 1;
+static float kx = 0.25;
+static float ky = 0.25;
 void TeleopJoy::callBack(const sensor_msgs::Joy::ConstPtr& joy)
 {
 
