@@ -5,10 +5,15 @@ project(wpv4_bringup)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 #find_package(catkin REQUIRED)
-find_package(catkin REQUIRED COMPONENTS roslaunch roscpp std_msgs tf genmsg joy)
+find_package(catkin REQUIRED COMPONENTS roslaunch roscpp std_msgs tf genmsg joy pcl_conversions pcl_ros )
+find_package(PCL REQUIRED)
 include_directories(
-  include ${catkin_INCLUDE_DIRS}
+  include 
+  ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
+
+link_directories(${PCL_LIBRARY_DIRS})
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -254,5 +259,13 @@ add_executable(wpv4_pt
 )
 add_dependencies(wpv4_pt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(wpv4_pt
+  ${catkin_LIBRARIES}
+)
+
+add_executable(wpv4_velodyne_filter
+  src/wpv4_velodyne_filter.cpp
+)
+add_dependencies(wpv4_velodyne_filter ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_velodyne_filter
   ${catkin_LIBRARIES}
 )

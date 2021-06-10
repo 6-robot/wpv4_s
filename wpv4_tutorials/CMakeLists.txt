@@ -8,6 +8,7 @@ project(wpv4_tutorials)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
+find_package(PCL REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -34,6 +35,7 @@ find_package(catkin REQUIRED)
 ##     * add a run_depend tag for "message_runtime"
 find_package(catkin REQUIRED COMPONENTS
   roscpp std_msgs sensor_msgs cv_bridge image_transport tf move_base_msgs actionlib
+  pcl_conversions pcl_ros 
 )
 ##   * add "message_generation" and every package in MSG_DEP_SET to
 ##     find_package(catkin REQUIRED COMPONENTS ...)
@@ -113,11 +115,14 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+
 include_directories(
-  include ${catkin_INCLUDE_DIRS}
-# include
-# ${catkin_INCLUDE_DIRS}
+  include 
+  ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
+
+link_directories(${PCL_LIBRARY_DIRS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -274,5 +279,13 @@ add_executable(wpv4_mini_pt
 )
 add_dependencies(wpv4_mini_pt ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(wpv4_mini_pt
+  ${catkin_LIBRARIES}
+)
+
+add_executable(wpv4_velodyne_data
+  src/wpv4_velodyne_data.cpp
+)
+add_dependencies(wpv4_velodyne_data ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_velodyne_data
   ${catkin_LIBRARIES}
 )

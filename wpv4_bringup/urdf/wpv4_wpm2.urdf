@@ -227,7 +227,7 @@
             <mesh filename="package://wpv4_bringup/meshes/m2_base.stl" scale="1 1 1"/>
         </geometry>
         <material name = "grey"/>
-        <origin rpy = "1.57 0 1.57" xyz = "-0.16 -0.075 0"/>
+        <origin rpy = "1.57 0 -1.57" xyz = "0.16 0.075 0"/>
     </visual>
 </link>
   <joint name = "base_mani" type = "fixed">
@@ -420,7 +420,6 @@
     <child link="velo_link" />
 </joint>
 
-<!-- Kinect -->
 <!-- Kinect -->
 <link name = "kinect2_dock">
   <visual>
