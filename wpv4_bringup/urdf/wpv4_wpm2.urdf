@@ -347,14 +347,14 @@
     <parent link="base_footprint"/>
     <child link="kinect2_dock"/>
     <limit effort="1000.0" lower="0" upper="1.7" velocity="0.5"/>
-    <origin xyz="0.174 0 0" rpy="0 -1.5707963 0"/>
+    <origin xyz="0.1 0 0" rpy="0 -1.5707963 0"/>
   </joint>
 
 <link name = "kinect2_ir_optical_frame">
   <visual>
    <geometry>
-    <!-- <box size=".25 .04 .07"/>-->
-    <box size="0 0 0"/>
+    <box size=".25 .04 .07"/>
+  <material name = "black"/>
    </geometry>
    <origin xyz = "0 0 0" rpy = "0 0 0"/>
    <material name = "blue"/>
@@ -387,6 +387,37 @@
     <origin xyz="0 0 0" rpy="0 0 0" /> <!--pos-->
     <parent link="kinect2_ir_optical_frame" />
     <child link="kinect2_rgb_optical_frame" />
+</joint>
+
+
+<link name = "kinect2_left_rot">
+  <visual>
+   <geometry>
+    <cylinder length="0.6" radius="0.01"/>
+   </geometry>
+  <material name = "grey"/>
+   <origin rpy = "0 1.57 0" xyz = "-0.3 0 0.3"/>
+  </visual>
+</link>
+<joint name="kinect_left" type="fixed">
+  <parent link="kinect2_dock"/>
+  <child link="kinect2_left_rot"/>
+  <origin xyz="0 0.04 -0.3" rpy="0 0 0"/> 
+</joint>
+
+<link name = "kinect2_right_rot">
+  <visual>
+   <geometry>
+    <cylinder length="0.6" radius="0.01"/>
+   </geometry>
+  <material name = "grey"/>
+   <origin rpy = "0 1.57 0" xyz = "-0.3 0 0.3"/>
+  </visual>
+</link>
+<joint name="kinect_right" type="fixed">
+  <parent link="kinect2_dock"/>
+  <child link="kinect2_right_rot"/>
+  <origin xyz="0 -0.04 -0.3" rpy="0 0 0"/> 
 </joint>
 
 </robot>
