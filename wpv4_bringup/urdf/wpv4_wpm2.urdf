@@ -89,31 +89,12 @@
       <origin rpy = "0 0 0" xyz = "-0.13  -0.04 -0.13"/>
       <material name = "black"/>
     </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="1.57 0 0" />
-      <geometry>
-        <cylinder radius="0.13" length="0.08"/>
-      </geometry>
-    </collision>
-    <inertial>
-    <mass value="10"/>
-    <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-    </inertial>
   </link>
-  <joint name = "base_to_lf_wheal" type = "continuous">
-    <axis rpy="0 0 0" xyz="0 1 0"/>
+  <joint name = "base_to_lf_wheal" type = "fixed">
     <parent link = "base_link"/>
     <child link = "lf_wheel"/>
     <origin rpy="0 0 0" xyz="0.135 0.26 0.038"/> <!--pos to base-->
   </joint>
-   <gazebo reference = "lf_wheel">
-            <mu1 value = "1.0"/>
-            <mu2 value = "1.0"/>
-            <kp value = "10.0"/>
-            <kd value = "1.0"/>
-            <fdir1 value = "1 0 0"/>
-            <turnGravityOff>true</turnGravityOff>
-  </gazebo>
 
 <link name = "rf_wheel">
   <visual>
@@ -123,31 +104,12 @@
     <origin rpy = "0 0 0" xyz = "-0.13  -0.04 -0.13"/>
     <material name = "black"/>
   </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="1.57 0 0" />
-    <geometry>
-      <cylinder radius="0.13" length="0.08"/>
-    </geometry>
-  </collision>
-  <inertial>
-  <mass value="10"/>
-  <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-  </inertial>
 </link>
-<joint name = "base_to_rf_wheal" type = "continuous">
-  <axis rpy="0 0 0" xyz="0 -1 0"/>
+<joint name = "base_to_rf_wheal" type = "fixed">
   <parent link = "base_link"/>
   <child link = "rf_wheel"/>
   <origin rpy="0 0 3.14" xyz="0.135 -0.26 0.038"/> <!--pos-->
 </joint>
- <gazebo reference = "rf_wheel">
-            <mu1 value = "1.0"/>
-            <mu2 value = "1.0"/>
-            <kp value = "10.0"/>
-            <kd value = "1.0"/>
-            <fdir1 value = "1 0 0"/>
-            <turnGravityOff>false</turnGravityOff>
-        </gazebo>
 
 <link name = "lb_wheel">
   <visual>
@@ -157,32 +119,12 @@
     <origin rpy = "0 0 0" xyz = "-0.13  -0.04 -0.13"/>
     <material name = "black"/>
   </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="1.57 0 0" />
-    <geometry>
-      <cylinder radius="0.13" length="0.08"/>
-    </geometry>
-  </collision>
-  <inertial>
-  <mass value="10"/>
-  <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-  </inertial>
 </link>
-<joint name = "base_to_lb_wheal" type = "continuous">
-  <axis rpy="0 0 0" xyz="0 1 0"/>
+<joint name = "base_to_lb_wheal" type = "fixed">
   <parent link = "base_link"/>
   <child link = "lb_wheel"/>
   <origin rpy="0 0 0" xyz="-0.175 0.26 0.038"/> <!--pos to base-->
 </joint>
- <gazebo reference = "lb_wheel">
-            <mu1 value = "1.0"/>
-            <mu2 value = "1.0"/>
-            <kp value = "10.0"/>
-            <kd value = "1.0"/>
-            <fdir1 value = "1 0 0"/>
-            <material>Gazebo/Black</material>
-            <turnGravityOff>false</turnGravityOff>
-        </gazebo>
 
 <link name = "rb_wheel">
   <visual>
@@ -192,33 +134,12 @@
     <origin rpy = "0 0 0" xyz = "-0.13  -0.04 -0.13"/>
     <material name = "black"/>
   </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="1.57 0 0" />
-    <geometry>
-      <cylinder radius="0.13" length="0.08"/>
-    </geometry>
-  </collision>
-  <inertial>
-  <mass value="10"/>
-  <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-  </inertial>
 </link>
-<joint name = "base_to_rb_wheal" type = "continuous">
-  <axis rpy="0 0 0" xyz="0 -1 0"/>
+<joint name = "base_to_rb_wheal" type = "fixed">
   <parent link = "base_link"/>
   <child link = "rb_wheel"/>
   <origin rpy="0 0 3.14" xyz="-0.175 -0.26 0.038"/> <!--pos-->
 </joint>
- <gazebo reference = "rb_wheel">
-            <mu1 value = "1.0"/>
-            <mu2 value = "1.0"/>
-            <kp value = "10.0"/>
-            <kd value = "1.0"/>
-            <fdir1 value = "1 0 0"/>
-            <material>Gazebo/Black</material>
-            <turnGravityOff>false</turnGravityOff>
-        </gazebo>
-
 
 <!-- ****manipulator ****-->
   <link name = "wpm2_joint_1">
@@ -235,6 +156,7 @@
     <child link = "wpm2_joint_1"/>
     <origin xyz = "0.24 0 .16"/>
 </joint>
+
 <!-- mani_part_2 -->
   <link name = "wpm2_joint_2">
     <visual>
@@ -388,25 +310,15 @@
    </geometry>
    <origin rpy = "0 0 0" xyz = "0 0 0"/>
   </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <geometry>
-      <cylinder radius="0.03" length="0.03"/>
-    </geometry>
-  </collision>
-  <inertial>
-  <mass value="10"/>
-  <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
-  </inertial>
 </link>
 <joint name="laser_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.2 0 0"  /> <!--pos-->
+    <origin rpy="0 0 0" xyz="0.32 0 0.2"  /> <!--pos-->
     <parent link="base_link" />
     <child link="laser" />
 </joint>
 
 <!-- velodyne -->
-<link name = "velo_link">
+<link name = "velodyne">
   <visual>
    <geometry>
     <cylinder length="0.00" radius="0.00"/>
@@ -415,9 +327,9 @@
   </visual>
 </link>
 <joint name="velodyne_joint" type="fixed">
-    <origin rpy="0 0 0" xyz="0.2 0 1.7"  /> <!--pos-->
+    <origin rpy="0 0 0" xyz="0.32 0 0.2"  />
     <parent link="base_link" />
-    <child link="velo_link" />
+    <child link="velodyne" />
 </joint>
 
 <!-- Kinect -->
