@@ -298,3 +298,11 @@ add_dependencies(wpv4_grab_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 target_link_libraries(wpv4_grab_node
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_mani_init
+  src/wpv4_mani_init.cpp
+)
+add_dependencies(wpv4_mani_init ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_mani_init
+  ${catkin_LIBRARIES}
+)

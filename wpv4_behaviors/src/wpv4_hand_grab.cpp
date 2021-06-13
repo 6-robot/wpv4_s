@@ -44,13 +44,10 @@
 
 // 抓取参数调节（单位：米）
 static float grab_y_offset = 0.0f;                  //机器人对准物品，横向位移偏移量
-static float grab_z_offset = -0.01f;                  //手臂抬起高度的补偿偏移量
-static float grab_forward_offset = 0.0f;    //手臂抬起后，机器人向前抓取物品移动的位移偏移量
-static float grab_gripper_value = 0.05;    //抓取物品时，手爪闭合后的手指间距
 
-static float target_dist = 0.85;
-static float target_x_k = 0.5; 
-static float target_z_k = 5.0; 
+static float target_dist = 0.85;                       //伸出手臂抓取前，对准物品的距离
+static float target_x_k = 0.5;                          //对准物品时，前后移动的速度系数
+static float target_z_k = 5.0;                          //对准物品时，旋转的速度系数
 
 static ros::Publisher obj_track_pub;
 static geometry_msgs::Pose obj_track_msg;
@@ -59,11 +56,12 @@ static ros::Publisher mani_ctrl_pub;
 static sensor_msgs::JointState mani_ctrl_msg;
 static ros::Publisher grab_result_pub;
 static std_msgs::String grab_result_msg;
+static ros::Publisher palm_ctrl_pub;
+static sensor_msgs::JointState palm_ctrl_msg;
 
 static float obj_track_x = 0.0;
 static float obj_track_y = 0.0;
 static float obj_track_z = 0.0;
-static float reachout_x_offset = 0.0;
 
 #define STEP_READY                     0
 #define STEP_TAKE_AIM              1
@@ -84,16 +82,28 @@ void VelCmd(float inVx , float inVy, float inTz)
     vel_pub.publish(vel_cmd);
 }
 
-void ManiGripper(float inGripperVal)
+void PalmAction(int inAction)
 {
-    sensor_msgs::JointState mani_ctrl_msg;
-    mani_ctrl_msg.name.resize(1);
-    mani_ctrl_msg.position.resize(1);
-    mani_ctrl_msg.velocity.resize(1);
-    mani_ctrl_msg.name[0] = "gripper";
-    mani_ctrl_msg.position[0] = inGripperVal;
-    mani_ctrl_msg.velocity[0] = 1.0;
-    mani_ctrl_pub.publish(mani_ctrl_msg);
+    // 0 松开手掌
+    if(inAction == 0)
+    {
+        for(int i=0;i<5;i++)
+        {
+            palm_ctrl_msg.position[i] = 100;
+        }
+        palm_ctrl_msg.position[5] = 0;
+    }
+    // 1 握住手掌
+    if(inAction == 1)
+    {
+        palm_ctrl_msg.position[0] = 100;
+        palm_ctrl_msg.position[1] = 100;
+        palm_ctrl_msg.position[2] = 100;
+        palm_ctrl_msg.position[3] = 100;
+        palm_ctrl_msg.position[4] = 100;
+        palm_ctrl_msg.position[5] = 0;
+    }
+    palm_ctrl_pub.publish(palm_ctrl_msg);
 }
 
 void ObjCoordCB(const wpb_mani_behaviors::Coord::ConstPtr &msg)
@@ -123,6 +133,7 @@ void GrabObjCallback(const geometry_msgs::Pose::ConstPtr& msg)
     ROS_WARN("**step -> STEP_TAKE_AIM**");
     grab_result_msg.data = "Take aim";
     grab_result_pub.publish(grab_result_msg);
+    PalmAction(0);
 }
 
 float VelFixed(float inValue, float inMin, float inMax)
@@ -151,6 +162,7 @@ int main(int argc, char** argv)
     vel_pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 30);
     mani_ctrl_pub = nh.advertise<sensor_msgs::JointState>("/wpm2/joint_ctrl_degree", 30);
     grab_result_pub = nh.advertise<std_msgs::String>("/wpv4/grab_result", 30);
+    palm_ctrl_pub = nh.advertise<sensor_msgs::JointState>("/rh56df3/set_angles", 30);
 
     ros::NodeHandle nh_param("~");
     nh_param.getParam("grab/target_z_k", target_z_k);
@@ -161,16 +173,15 @@ int main(int argc, char** argv)
 
     ros::Time time = ros::Time(0);
     
+    // 手臂角度初始化
     mani_ctrl_msg.name.resize(7);
     mani_ctrl_msg.position.resize(7);
     mani_ctrl_msg.velocity.resize(7);
-    //关节角度
     for(int i=0;i<7;i++)
     {
         mani_ctrl_msg.position[i] = 0;
         mani_ctrl_msg.velocity[i] = 1000;
     }
-
     mani_ctrl_msg.position[0] = -90;
     mani_ctrl_msg.position[1] = -90;
     mani_ctrl_msg.position[2] = 90;
@@ -178,6 +189,12 @@ int main(int argc, char** argv)
     mani_ctrl_msg.position[4] = 0;
     mani_ctrl_msg.position[5] = 0;
     mani_ctrl_msg.position[6] = 0;
+
+    // 手掌关节初始化
+    palm_ctrl_msg.name.resize(6);
+    palm_ctrl_msg.position.resize(6);
+    palm_ctrl_msg.velocity.resize(6);
+    PalmAction(0);
 
     int nCount = 0;
     ros::Rate r(30);
@@ -221,7 +238,6 @@ int main(int argc, char** argv)
                 mani_ctrl_msg.position[5] = 60;
                 mani_ctrl_msg.position[6] = 0;
                 mani_ctrl_pub.publish(mani_ctrl_msg);
-                ManiGripper(0.7);
             }
             mani_ctrl_pub.publish(mani_ctrl_msg);
             nCount ++;
@@ -256,7 +272,7 @@ int main(int argc, char** argv)
         if(step == STEP_GRAB_OBJ)
         {
             VelCmd(0,0,0);
-            ManiGripper(grab_gripper_value);
+            PalmAction(1);
             nCount ++;
             if(nCount > 5* 30)
             {
@@ -272,7 +288,13 @@ int main(int argc, char** argv)
         if(step == STEP_TAKE_OVER)
         {
             VelCmd(0,0,0);
-            mani_ctrl_msg.position[1] = -100;
+            mani_ctrl_msg.position[0] = 0;          //根旋转关节
+            mani_ctrl_msg.position[1] = -30;
+            mani_ctrl_msg.position[2] = 90;
+            mani_ctrl_msg.position[3] = 120;
+            mani_ctrl_msg.position[4] = 90;
+            mani_ctrl_msg.position[5] = 60;
+            mani_ctrl_msg.position[6] = 0;
             mani_ctrl_pub.publish(mani_ctrl_msg);
             nCount ++;
             if(nCount > 3* 30)
