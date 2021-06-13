@@ -58,7 +58,6 @@ void VelodyneCallback(const sensor_msgs::PointCloud2ConstPtr& msg)
 
     int cloudSize = pointCloudIn.points.size();
     
-
     new_scan.header.stamp = msg->header.stamp;
     new_scan.header.frame_id = msg->header.frame_id;
     new_scan.angle_max = 2*M_PI;
@@ -93,6 +92,8 @@ void VelodyneCallback(const sensor_msgs::PointCloud2ConstPtr& msg)
             {
                 float angle = atan(pointCloudIn.points[i].y/pointCloudIn.points[i].x);
                 int degree = angle * 180/M_PI;
+                if( pointCloudIn.points[i].x < 0 )
+                    degree += 180;
                 while(degree > 360)
                     degree -= 360;
                 while(degree < 0)
