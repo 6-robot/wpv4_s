@@ -314,3 +314,11 @@ add_dependencies(wpv4_waypoint_navigation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${
 target_link_libraries(wpv4_waypoint_navigation
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_mobile_manipulation
+  src/wpv4_mobile_manipulation.cpp
+)
+add_dependencies(wpv4_mobile_manipulation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_mobile_manipulation
+  ${catkin_LIBRARIES}
+)
