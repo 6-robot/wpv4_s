@@ -306,3 +306,11 @@ add_dependencies(wpv4_mani_init ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 target_link_libraries(wpv4_mani_init
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_waypoint_navigation
+  src/wpv4_waypoint_navigation.cpp
+)
+add_dependencies(wpv4_waypoint_navigation ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_waypoint_navigation
+  ${catkin_LIBRARIES}
+)
