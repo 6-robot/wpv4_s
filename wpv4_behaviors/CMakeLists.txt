@@ -226,3 +226,11 @@ add_dependencies(wpv4_hand_grab ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXP
 target_link_libraries(wpv4_hand_grab
   ${catkin_LIBRARIES}
 )
+
+add_executable(wpv4_let_go
+  src/wpv4_let_go.cpp
+)
+add_dependencies(wpv4_let_go ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(wpv4_let_go
+  ${catkin_LIBRARIES}
+)

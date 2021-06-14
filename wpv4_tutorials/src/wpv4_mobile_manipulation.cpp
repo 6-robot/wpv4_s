@@ -95,6 +95,9 @@ void NaviResultCB(const std_msgs::String::ConstPtr &msg)
         {
             ROS_INFO("[NaviResultCB] Waypoint 2!");
             deley_count = 0;
+            std_msgs::String behavior_msg;
+            behavior_msg.data = "let_go start";
+            behaviors_pub.publish(behavior_msg);
             step = STEP_DONE;
         }
     }
