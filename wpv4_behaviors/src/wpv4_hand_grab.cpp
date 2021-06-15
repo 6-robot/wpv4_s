@@ -39,7 +39,7 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/JointState.h>
-#include <wpb_mani_behaviors/Coord.h>
+#include <wpv4_behaviors/Coord.h>
 #include <math.h>
 
 // 抓取参数调节（单位：米）
@@ -106,7 +106,7 @@ void PalmAction(int inAction)
     palm_ctrl_pub.publish(palm_ctrl_msg);
 }
 
-void ObjCoordCB(const wpb_mani_behaviors::Coord::ConstPtr &msg)
+void ObjCoordCB(const wpv4_behaviors::Coord::ConstPtr &msg)
 {
     if(step == STEP_TAKE_AIM)
     {
