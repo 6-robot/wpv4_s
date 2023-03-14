@@ -64,7 +64,6 @@
 #include <wpv4_behaviors/Coord.h>
 #include <std_msgs/String.h>
 #include <std_msgs/Float64.h>
-#include "highgui.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
