@@ -30,7 +30,7 @@
     <rosparam command="load" file="$(find wpv4_bringup)/config/m8n.yaml" />
   </node>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
