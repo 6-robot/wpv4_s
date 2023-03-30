@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle n;
   //odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
-  ros::Subscriber sub = n.subscribe("imu/data", 1000, imuCallback);
+  ros::Subscriber sub = n.subscribe("imu/data_raw", 1000, imuCallback);
   ros::spin();
 
   return 0;
